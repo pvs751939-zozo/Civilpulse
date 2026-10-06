@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CivicPulse – Report. Prioritize. Resolve.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>CivicPulse</h1>
+  <p>Tell the city what's broken. We'll make sure the right team sees it first.</p>
+  <div class="bar-nav">
+    <nav>
+      <button data-v="map">Map</button>
+      <button data-v="dash">Dashboard</button>
+      <button data-v="track">Track</button>
+      <button data-v="admin">Department</button>
+    </nav>
+    <div class="actions">
+      <button data-v="help" class="pill-help"><span aria-hidden="true">&#127916;</span> How to Use / Demo</button>
+      <button data-v="report" class="pill-cta on">Report a problem <span aria-hidden="true">&#8599;</span></button>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="report">
+  <h2>Report a problem</h2>
+  <form id="form">
+    <label>What's wrong?
+      <textarea id="desc" rows="4" required placeholder="e.g. Deep pothole near the bus stop, two bikes already fell"></textarea>
+    </label>
+    <div class="row">
+      <button type="button" id="mic" class="ghost">Speak instead</button>
+      <select id="lang" aria-label="Voice language"><option value="en-IN">English</option><option value="hi-IN">हिन्दी</option><option value="kn-IN">ಕನ್ನಡ</option><option value="ta-IN">தமிழ்</option></select>
+      <label class="file">Add a photo <input type="file" id="photo" accept="image/*"></label>
+    </div>
+    <p class="hint">Tap the map to drop a pin where the problem is.</p>
+    <div id="rmap" class="map small"></div>
+    <button type="button" id="loc" class="ghost">Use my location</button>
+    <button type="submit" class="primary">Submit report</button>
+  </form>
+  <div id="result" hidden></div>
+</section>
+
+<section id="map" hidden>
+  <h2>Live problem map</h2>
+  <label class="check"><input type="checkbox" id="heat"> Show hotspots</label>
+  <div id="mmap" class="map"></div>
+  <p class="legend"><b style="color:#2e9e6b">Low</b> <b style="color:#c99700">Medium</b> <b style="color:#e8742c">High</b> <b style="color:#d12f3f">Critical</b>. Bigger circles mean more reports.</p>
+</section>
+
+<section id="dash" hidden>
+  <h2>City dashboard</h2>
+  <div id="stats" class="stats"></div>
+  <div class="two">
+    <div><h3>By category</h3><div id="catbars"></div></div>
+    <div><h3>By priority</h3><div id="sevbars"></div></div>
+  </div>
+</section>
+
+<section id="track" hidden>
+  <h2>Track a complaint</h2>
+  <form id="tform" class="row">
+    <input id="tid" required placeholder="Enter your ID, e.g. CP-1001">
+    <button class="primary">Check status</button>
+  </form>
+  <div id="tres"></div>
+</section>
+
+<section id="admin" hidden>
+  <h2>Department view</h2>
+  <p class="hint">Update a status here and see it change on the Track page.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>ID</th><th>Problem</th><th>Department</th><th>Priority</th><th>Reports</th><th>Status</th></tr></thead>
+    <tbody id="alist"></tbody>
+  </table></div>
+  <button id="reset" class="ghost">Reset demo data</button>
+</section>
+<section id="help" hidden>
+  <h2>How to use CivicPulse</h2>
+  <div id="demo" class="demo"></div>
+  <ol class="guide">
+    <li><b>Report:</b> describe the problem by typing or tapping "Speak instead". Add a photo if you have one.</li>
+    <li><b>Pin it:</b> tap the map or press "Use my location", then submit. You get a complaint ID, the priority and the department, with the reason.</li>
+    <li><b>Duplicates:</b> if someone already reported the same problem within 100 m, your report joins that case.</li>
+    <li><b>Map:</b> see every case on the Map tab. Turn on "Show hotspots" to see where problems cluster.</li>
+    <li><b>Dashboard:</b> see totals, active and resolved cases, high-priority issues and category charts.</li>
+    <li><b>Track:</b> enter your ID to see Reported, Assigned, In Progress or Resolved.</li>
+    <li><b>Department:</b> change a status here and watch it update on the Track page.</li>
+  </ol>
+</section>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.heat/0.2.0/leaflet-heat.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

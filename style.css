@@ -1,0 +1,65 @@
+:root{--ink:#12263a;--paper:#f2f6f8;--card:#fff;--line:#d3dde4;--brand:#0f6e8c;--brand-d:#0a4f66;--muted:#5c7080}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 "Atkinson Hyperlegible",system-ui,sans-serif}
+header{background:var(--ink);color:#fff;padding:28px 20px 0}
+header h1{margin:0;font-size:2.4rem;letter-spacing:-.5px}
+header p{margin:4px 0 18px;color:#b9cbd8;max-width:52ch}
+nav{display:flex;gap:4px;overflow-x:auto}
+nav button{background:none;border:0;color:#b9cbd8;padding:12px 16px;font:inherit;cursor:pointer;border-bottom:4px solid transparent}
+nav button.on{color:#fff;border-color:#4cc3e6;font-weight:700}
+main{max-width:900px;margin:0 auto;padding:24px 20px 60px}
+h2{margin:0 0 16px}
+h3{margin:0 0 8px}
+label{display:block;font-weight:700;margin-bottom:12px}
+textarea,input:not([type=checkbox]):not([type=file]){width:100%;padding:12px;border:1px solid var(--line);border-radius:6px;font:inherit;margin-top:6px}
+button{font:inherit;cursor:pointer;border-radius:6px;padding:11px 18px;border:1px solid var(--brand);background:#fff;color:var(--brand)}
+button.primary{background:var(--brand);color:#fff;font-weight:700}
+button.primary:hover{background:var(--brand-d)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid #4cc3e6;outline-offset:2px}
+.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.row input{flex:1;margin:0}
+.file{margin:0;font-weight:400}
+.file input{margin-top:0}
+.hint{color:var(--muted);margin:8px 0}
+.map{height:420px;border-radius:8px;border:1px solid var(--line);margin-bottom:12px}
+.map.small{height:260px}
+.check{display:inline-block}
+.legend b{margin-right:10px}
+#result,#tres{background:var(--card);border-left:6px solid var(--brand);padding:16px 20px;margin-top:20px;border-radius:6px}
+#result.merged{border-color:#e8742c}
+#result dl{display:grid;grid-template-columns:110px 1fr;gap:4px 12px;margin:10px 0 0}
+#result dt{color:var(--muted)}
+#result dd{margin:0;font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:24px}
+.stat{background:var(--card);border:1px solid var(--line);padding:16px;border-radius:8px}
+.stat b{display:block;font-size:2rem}
+.stat span{color:var(--muted)}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+.bar{display:grid;grid-template-columns:150px 1fr 28px;align-items:center;gap:8px;margin-bottom:8px;font-size:.92rem}
+.bar i{display:block;height:14px;background:var(--brand);border-radius:3px;min-width:2px}
+.bar em{font-style:normal;font-weight:700;text-align:right}
+.steps{display:flex;list-style:none;padding:0;margin:16px 0 0;gap:6px}
+.steps li{flex:1;text-align:center;padding:10px 4px;background:#e4ecf0;color:var(--muted);border-radius:4px;font-size:.9rem}
+.steps li.done{background:var(--brand);color:#fff;font-weight:700}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;background:var(--card);margin-bottom:14px}
+th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;font-size:.92rem}
+select{padding:6px;font:inherit}
+@media(max-width:560px){.bar{grid-template-columns:110px 1fr 24px}header h1{font-size:2rem}}
+.demo{margin-bottom:20px}
+.demo iframe,.demo video{width:100%;aspect-ratio:16/9;border:1px solid var(--line);border-radius:8px;background:#000}
+.guide{padding-left:22px}
+.guide li{margin-bottom:8px}
+
+/* Header: tabs on the left, How to Use + Report actions on the right */
+.bar-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.actions{display:flex;gap:10px;align-items:center;padding-bottom:10px;flex-wrap:wrap}
+.actions button{border-radius:999px;padding:11px 20px;font-weight:700;white-space:nowrap;transition:transform .15s,background .15s}
+.actions button:hover{transform:translateY(-1px)}
+.pill-help{background:rgba(255,255,255,.04);color:#fff;border:1px solid rgba(255,255,255,.28)}
+.pill-help:hover{background:rgba(255,255,255,.12)}
+.pill-help.on{border-color:#4cc3e6;background:rgba(76,195,230,.15)}
+.pill-cta{background:linear-gradient(90deg,#2ee6c5,#3ccbe8);color:#06303a;border:0}
+.pill-cta:hover{background:linear-gradient(90deg,#4cf0d2,#5ad6ef)}
+.pill-cta.on{box-shadow:0 0 0 3px rgba(76,195,230,.4)}
+@media(max-width:560px){.actions{width:100%}.actions button{flex:1;padding:11px 12px}}
