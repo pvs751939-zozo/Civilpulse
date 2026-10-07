@@ -3,23 +3,36 @@ const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAl
 
 /* ---------- 1. Rules: categories, departments, severity ---------- */
 const CATS = {
-  'Pothole / Road Damage': { k: ['pothole', 'road', 'crack', 'tar', 'asphalt', 'pit'], dept: 'Public Works (Roads)' },
-  'Garbage':               { k: ['garbage', 'trash', 'waste', 'dump', 'litter', 'rubbish', 'bin'], dept: 'Solid Waste Management' },
-  'Water Leakage':         { k: ['water', 'leak', 'pipe', 'sewage', 'drain', 'burst'], dept: 'Water Supply Board' },
-  'Streetlight':           { k: ['streetlight', 'light', 'lamp', 'dark', 'bulb', 'pole'], dept: 'Electricity Department' },
+  'Pothole / Road Damage': { k: ['pothole', 'road', 'crack', 'tar', 'asphalt', 'pit', 'गड्ढा', 'गड्ढे', 'सड़क', 'दरार', 'ಗುಂಡಿ', 'ರಸ್ತೆ', 'குழி', 'சாலை'], dept: 'Public Works (Roads)' },
+  'Garbage':               { k: ['garbage', 'trash', 'waste', 'dump', 'litter', 'rubbish', 'bin', 'कचरा', 'कूड़ा', 'गंदगी', 'ಕಸ', 'குப்பை'], dept: 'Solid Waste Management' },
+  'Water Leakage':         { k: ['water', 'leak', 'pipe', 'sewage', 'drain', 'burst', 'पानी', 'रिसाव', 'पाइप', 'नाली', 'सीवर', 'ನೀರು', 'ಸೋರಿಕೆ', 'ಪೈಪ್', 'ಚರಂಡಿ', 'தண்ணீர்', 'கசிவு', 'குழாய்', 'சாக்கடை'], dept: 'Water Supply Board' },
+  'Streetlight':           { k: ['streetlight', 'light', 'lamp', 'dark', 'bulb', 'pole', 'बत्ती', 'लाइट', 'अंधेरा', 'ದೀಪ', 'ಲೈಟ್', 'ಕತ್ತಲೆ', 'விளக்கு', 'இருட்டு'], dept: 'Electricity Department' },
   'Other':                 { k: [], dept: 'General Municipal Office' }
 };
-const CRITICAL = ['accident', 'injury', 'injuries', 'injured', 'live wire', 'fire', 'flood', 'electrocution', 'electrocuted', 'hospital', 'school', 'children', 'collapse'];
-const HIGH = ['huge', 'deep', 'large', 'days', 'week', 'blocked', 'smell', 'dangerous', 'night', 'traffic'];
+const CRITICAL = ['accident', 'injury', 'injuries', 'injured', 'live wire', 'fire', 'flood', 'electrocution', 'electrocuted', 'hospital', 'school', 'children', 'collapse',
+  'दुर्घटना', 'हादसा', 'घायल', 'आग', 'बाढ़', 'करंट', 'अस्पताल', 'स्कूल', 'बच्चे',
+  'ಅಪಘಾತ', 'ಗಾಯ', 'ಬೆಂಕಿ', 'ಪ್ರವಾಹ', 'ಆಸ್ಪತ್ರೆ', 'ಶಾಲೆ', 'ಮಕ್ಕಳು',
+  'விபத்து', 'காயம்', 'நெருப்பு', 'வெள்ளம்', 'மருத்துவமனை', 'பள்ளி', 'குழந்தைகள்'];
+const HIGH = ['huge', 'deep', 'large', 'days', 'week', 'blocked', 'smell', 'dangerous', 'night', 'traffic',
+  'बड़ा', 'गहरा', 'बदबू', 'खतरनाक', 'रात', 'ट्रैफिक',
+  'ದೊಡ್ಡ', 'ಆಳ', 'ದುರ್ವಾಸನೆ', 'ಅಪಾಯಕಾರಿ', 'ರಾತ್ರಿ',
+  'பெரிய', 'ஆழமான', 'துர்நாற்றம்', 'ஆபத்தான', 'இரவு'];
 const LEVELS = ['Low', 'Medium', 'High', 'Critical'];
 const COLORS = { Low: '#2e9e6b', Medium: '#c99700', High: '#e8742c', Critical: '#d12f3f' };
 const STEPS = ['Reported', 'Assigned', 'In Progress', 'Resolved'];
 // Demo video: paste a YouTube link (e.g. 'https://youtu.be/XXXX') or a file path (e.g. 'assets/demo.mp4'). Leave '' to hide the player.
-const DEMO_VIDEO = '';
+const DEMO_VIDEO = 'https://youtu.be/YbZmSD741A8';
 const DUP_RADIUS = 100; // metres; phone GPS is often 10-50 m off
 
-// Whole-word match (allows simple endings: s, es, d, ed, ing) so "hospital" never matches "pit".
-const matches = (text, words) => words.filter(w => new RegExp('\\b' + w + '(?:s|es|d|ed|ing)?\\b').test(text));
+// English words use whole-word matching (allows simple endings: s, es, d, ed, ing) so "hospital" never matches "pit".
+// Hindi/Kannada/Tamil words use a plain substring check, because \b does not work on non-English letters.
+const isEnglish = w => /^[\x00-\x7f]+$/.test(w);
+const matches = (text, words) => {
+  text = text.normalize('NFC');
+  return words.filter(w => isEnglish(w)
+    ? new RegExp('\\b' + w + '(?:s|es|d|ed|ing)?\\b').test(text)
+    : text.includes(w.normalize('NFC')));
+};
 
 // Pick the category whose keywords appear most often. Returns the category and the words that matched.
 function classify(text) {

@@ -6,7 +6,7 @@ CivicPulse lets citizens report civic issues (potholes, garbage, water leaks, br
 
 ## Features
 
-- **Complaint submission** with text, voice (Web Speech API, English / Hindi / Kannada / Tamil) and an optional photo, plus a map pin or "Use my location"
+- **Complaint submission** with text, voice (Web Speech API, English / Hindi / Kannada / Tamil) with keywords in all four languages and an optional photo, plus a map pin or "Use my location"
 - **Issue detection:** classifies the complaint into a category from the text and photo file name
 - **Severity detection:** Low, Medium, High or Critical, based on danger words, urgency words and the number of reports, with a plain-language "Why" shown for every decision
 - **Duplicate detection:** same category, still open and within 100 m (haversine distance, nearest match wins) are merged into one case
@@ -16,7 +16,13 @@ CivicPulse lets citizens report civic issues (potholes, garbage, water leaks, br
 - **Complaint tracking:** Reported → Assigned → In Progress → Resolved
 - **Department view** to update statuses and see them reflected in tracking
 
-## Demo video\n\nSet `DEMO_VIDEO` at the top of `app.js` to a YouTube link or a file such as `assets/demo.mp4`. It plays on the **How to use** tab.\n\n## How it works
+## Demo video
+
+Watch the demo: https://youtu.be/YbZmSD741A8 (also embedded on the **How to use** tab of the site).
+
+To change it, set `DEMO_VIDEO` at the top of `app.js` to a YouTube link or a file such as `assets/demo.mp4`.
+
+## How it works
 
 Citizen report → category detected → severity calculated → duplicates merged → routed to department → shown on map → status tracked.
 
